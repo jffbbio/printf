@@ -1,59 +1,43 @@
 #include "main.h"
-#include <stdarg.h>
-#include <unistd.h>
-
 /**
- * _printf - A custom implementation of the printf function
- * @format: A character string that contains zero or more directives
+ * _printf - Prints formatted output to stdout.
+ * @format: String containing format specifiers.
  *
- * Return: The number of characters printed (excluding the null byte used to end output to strings)
+ * Return: Number of characters printed, or -1 on error.
  */
 int _printf(const char *format, ...)
 {
-	va_list args;
-	int i, count = 0;
-	char c, *s;
+	va_list list;
+	char buffer[BUFFER_SIZE];
+	int buff_ind = 0, printed_chars = 0, i;
 
-	va_start(args, format);
+	va_start(list, format);
 
-	for (i = 0; format[i] != '\0'; i++)
+	for (i = 0; format && format[i]; i++)
 	{
 		if (format[i] == '%')
 		{
 			i++;
+			if (format[i] == '\0')
+				return (-1);
 
-			switch (format[i])
-			{
-				case 'c':
-					c = (char) va_arg(args, int);
-					write(1, &c, 1);
-					count++;
-					break;
+			i += print_format_specifier(buffer, &buff_ind, format + i, &list);
 
-				case 's':
-					s = va_arg(args, char *);
-					while (*s != '\0')
-					{
-						write(1, s, 1);
-						s++;
-						count++;
-					}
-					break;
+			if (i == -1)
+				return (-1);
 
-				case '%':
-					write(1, "%", 1);
-					count++;
-					break;
-			}
+			printed_chars += i;
 		}
 		else
 		{
-			write(1, &format[i], 1);
-			count++;
+			printed_chars++;
+			print_char(buffer, format[i], &buff_ind);
 		}
 	}
 
-	va_end(args);
+	print_buffer(buffer, &buff_ind);
 
-	return (count);
+	va_end(list);
+
+	return (printed_chars);
 }

@@ -107,6 +107,8 @@ int write_unsgnd(int is_negative, int ind,
 char buffer[],
 	int flags, int width, int precision, int size);
 
+int write_integer(char buffer[], int n, int width, int precision, int flags);
+
 /****************** UTILS ******************/
 int is_printable(char);
 int append_hexa_code(char, char[], int);
