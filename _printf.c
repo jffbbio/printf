@@ -1,4 +1,6 @@
 #include "main.h"
+#include <stdarg.h>
+#include <stdio.h>
 /**
  * _printf - Prints formatted output to stdout.
  * @format: String containing format specifiers.
@@ -38,6 +40,30 @@ int _printf(const char *format, ...)
 	print_buffer(buffer, &buff_ind);
 
 	va_end(list);
+
+	return (printed_chars);
+}
+
+/**
+ * print_format_specifier - prints the value of a format specifier
+ * @format: the format string
+ * @list: the va_list of arguments
+ * Return: the number of characters printed
+ */
+int print_format_specifier(const char *format, va_list list)
+{
+	int num;
+	int printed_chars = 0;
+
+	if (*format == 'd' || *format == 'i')
+	{
+		num = va_arg(list, int);
+		printed_chars += printf("%d", num);
+	}
+	else
+	{
+		/* Handle other conversion specifiers here */
+	}
 
 	return (printed_chars);
 }
