@@ -1,4 +1,7 @@
 #include "main.h"
+#include <stdio.h>
+#include <stdarg.h>
+#include <ctype.h>
 /**
  * get_precision - Calculates the precision for printing
  * @format: Formatted string in which to print the arguments
@@ -21,7 +24,7 @@ int get_precision(const char *format, int *i, va_list list)
 /* Parse the precision */
 	for (curr_pos += 1; format[curr_pos] != '\0'; curr_pos++)
 	{
-		if (isdigit(format[cur_pos]))
+		if (isdigit(format[curr_pos]))
 			precision = precision * 10 + format[curr_pos] - '0';
 		else if (format[curr_pos] == '*')
 		{

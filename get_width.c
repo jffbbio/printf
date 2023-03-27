@@ -1,4 +1,7 @@
 #include "main.h"
+#include <stdio.h>
+#include <stdarg.h>
+#include <ctype.h>
 /**
  * get_width - extracts the width specifier from a printf format string
  * @format: the format string

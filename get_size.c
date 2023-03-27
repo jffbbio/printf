@@ -12,7 +12,7 @@ int get_size(const char *format, int *i)
 	int curr_i = *i + 1;
 	int argument_size = 0;
 
-	if (format[current_index] == 'l')
+	if (format[curr_i] == 'l')
 		argument_size = S_LONG;
 	else if (format[curr_i] == 'h')
 		argument_size = S_SHORT;

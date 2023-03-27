@@ -1,39 +1,47 @@
 #include "main.h"
-#include <stdarg.h>
-#include <stdio.h>
+
+void print_buffer(char buffer[], int *buff_ind);
+
 /**
- * _printf - Prints formatted output to stdout.
- * @format: String containing format specifiers.
- *
- * Return: Number of characters printed, or -1 on error.
+ * _printf - Printf function
+ * @format: format.
+ * Return: Printed chars.
  */
 int _printf(const char *format, ...)
 {
+	int i, printed = 0, printed_chars = 0;
+	int flags, width, precision, size, buff_ind = 0;
 	va_list list;
-	char buffer[BUFFER_SIZE];
-	int buff_ind = 0, printed_chars = 0, i;
+	char buffer[BUFF_SIZE];
+
+	if (format == NULL)
+		return (-1);
 
 	va_start(list, format);
 
-	for (i = 0; format && format[i]; i++)
+	for (i = 0; format && format[i] != '\0'; i++)
 	{
-		if (format[i] == '%')
+		if (format[i] != '%')
 		{
-			i++;
-			if (format[i] == '\0')
-				return (-1);
-
-			i += print_format_specifier(buffer, &buff_ind, format + i, &list);
-
-			if (i == -1)
-				return (-1);
-
-			printed_chars += i;
+			buffer[buff_ind++] = format[i];
+			if (buff_ind == BUFF_SIZE)
+				print_buffer(buffer, &buff_ind);
+			/* write(1, &format[i], 1);*/
+			printed_chars++;
 		}
 		else
 		{
-			printed_chars++;
-			print_char(buffer, format[i], &buff_ind);
+			print_buffer(buffer, &buff_ind);
+			flags = get_flags(format, &i);
+			width = get_width(format, &i, list);
+			precision = get_precision(format, &i, list);
+			size = get_size(format, &i);
+			++i;
+			printed = handle_print(format, &i, list, buffer,
+					flags, width, precision, size);
+			if (printed == -1)
+				return (-1);
+			printed_chars += printed;
 		}
 	}
 
@@ -45,25 +53,15 @@ int _printf(const char *format, ...)
 }
 
 /**
- * print_format_specifier - prints the value of a format specifier
- * @format: the format string
- * @list: the va_list of arguments
- * Return: the number of characters printed
+ * print_buffer - Prints the contents of the buffer if it exist
+ * @buffer: Array of chars
+ * @buff_ind: Index at which to add next char, represents the length.
  */
-int print_format_specifier(const char *format, va_list list)
+void print_buffer(char buffer[], int *buff_ind)
 {
-	int num;
-	int printed_chars = 0;
+	if (*buff_ind > 0)
+		write(1, &buffer[0], *buff_ind);
 
-	if (*format == 'd' || *format == 'i')
-	{
-		num = va_arg(list, int);
-		printed_chars += printf("%d", num);
-	}
-	else
-	{
-		/* Handle other conversion specifiers here */
-	}
-
-	return (printed_chars);
+	*buff_ind = 0;
 }
+
