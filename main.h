@@ -37,7 +37,6 @@ struct fmt
  * @fmt: The format.
  * @fm_t: The function associated.
  */
-
 typedef struct fmt fmt_t;
 
 int _printf(const char *format, ...);
@@ -116,3 +115,4 @@ long int convert_size_number(long int num, int size);
 long int convert_size_unsgnd(unsigned long int num, int size);
 
 #endif /* MAIN_H */
+
