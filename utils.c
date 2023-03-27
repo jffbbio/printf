@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
  * is_printable - Evaluates if a char is printable
  * @c: Char to be evaluated.
@@ -81,5 +80,6 @@ long int convert_size_unsgnd(unsigned long int num, int size)
 		return (num);
 	else if (size == S_SHORT)
 		return ((unsigned short)num);
+
 	return ((unsigned int)num);
 }

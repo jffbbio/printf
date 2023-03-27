@@ -1,14 +1,11 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdarg.h>
-#include <ctype.h>
 /**
- * get_width - extracts the width specifier from a printf format string
- * @format: the format string
- * @i: a pointer to the current index in the format string
- * @list: the va_list for the argument list
+ * get_width - Calculates the width for printing
+ * @format: Formatted string in which to print the arguments.
+ * @i: List of arguments to be printed.
+ * @list: list of arguments.
  *
- * Return: the width specifier, or 0 if not found
+ * Return: width.
  */
 int get_width(const char *format, int *i, va_list list)
 {
@@ -17,7 +14,7 @@ int get_width(const char *format, int *i, va_list list)
 
 	for (curr_i = *i + 1; format[curr_i] != '\0'; curr_i++)
 	{
-		if (isdigit(format[curr_i]))
+		if (is_digit(format[curr_i]))
 		{
 			width *= 10;
 			width += format[curr_i] - '0';
@@ -25,22 +22,15 @@ int get_width(const char *format, int *i, va_list list)
 		else if (format[curr_i] == '*')
 		{
 			curr_i++;
-
-			int arg_width = va_arg(list, int);
-
-			if (arg_width >= 0)
-			{
-				width = arg_width;
-			}
+			width = va_arg(list, int);
 			break;
 		}
 		else
-		{
 			break;
-		}
 	}
 
 	*i = curr_i - 1;
 
 	return (width);
 }
+

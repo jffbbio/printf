@@ -37,7 +37,6 @@ struct fmt
  * @fmt: The format.
  * @fm_t: The function associated.
  */
-
 typedef struct fmt fmt_t;
 
 int _printf(const char *format, ...);
@@ -107,8 +106,6 @@ int write_unsgnd(int is_negative, int ind,
 char buffer[],
 	int flags, int width, int precision, int size);
 
-int write_integer(char buffer[], int n, int width, int precision, int flags);
-
 /****************** UTILS ******************/
 int is_printable(char);
 int append_hexa_code(char, char[], int);
@@ -118,3 +115,4 @@ long int convert_size_number(long int num, int size);
 long int convert_size_unsgnd(unsigned long int num, int size);
 
 #endif /* MAIN_H */
+

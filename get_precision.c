@@ -1,34 +1,32 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdarg.h>
-#include <ctype.h>
 /**
  * get_precision - Calculates the precision for printing
  * @format: Formatted string in which to print the arguments
- * @i: Pointer to the current position in the format string
- * @list: va_list of arguments
+ * @i: List of arguments to be printed.
+ * @list: list of arguments.
  *
- * Return: The precision to use for printing
+ * Return: Precision.
  */
 int get_precision(const char *format, int *i, va_list list)
 {
-	int curr_pos = *i + 1;
+	int curr_i = *i + 1;
 	int precision = -1;
 
-/* Check if the precision is specified */
-	if (format[curr_pos] != '.')
+	if (format[curr_i] != '.')
 		return (precision);
 
 	precision = 0;
 
-/* Parse the precision */
-	for (curr_pos += 1; format[curr_pos] != '\0'; curr_pos++)
+	for (curr_i += 1; format[curr_i] != '\0'; curr_i++)
 	{
-		if (isdigit(format[curr_pos]))
-			precision = precision * 10 + format[curr_pos] - '0';
-		else if (format[curr_pos] == '*')
+		if (is_digit(format[curr_i]))
 		{
-			curr_pos++;
+			precision *= 10;
+			precision += format[curr_i] - '0';
+		}
+		else if (format[curr_i] == '*')
+		{
+			curr_i++;
 			precision = va_arg(list, int);
 			break;
 		}
@@ -36,8 +34,8 @@ int get_precision(const char *format, int *i, va_list list)
 			break;
 	}
 
-/* Update the current position */
-	*i = curr_pos - 1;
+	*i = curr_i - 1;
 
 	return (precision);
 }
+

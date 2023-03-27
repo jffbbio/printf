@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
  * print_char - Prints a char
  * @types: List a of arguments
@@ -95,7 +94,6 @@ int print_percent(va_list types, char buffer[],
 	return (write(1, "%%", 1));
 }
 
-
 /**
  * print_int - Print int
  * @types: Lista of arguments
@@ -138,7 +136,6 @@ int print_int(va_list types, char buffer[],
 
 	return (write_number(is_negative, i, buffer, flags, width, precision, size));
 }
-
 
 /**
  * print_binary - Prints an unsigned number
@@ -184,4 +181,3 @@ int print_binary(va_list types, char buffer[],
 	}
 	return (count);
 }
-
